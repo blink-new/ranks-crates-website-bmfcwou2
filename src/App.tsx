@@ -569,6 +569,12 @@ export default function App() {
     alert('Order deleted successfully!')
   }
 
+  const topCustomer = userProfiles.length > 0
+    ? userProfiles.reduce((max, current) =>
+        max.totalSpent > current.totalSpent ? max : current,
+      )
+    : null
+
   // ---------------------------------------------------------------------------
   // JSX return
   // ---------------------------------------------------------------------------
@@ -644,21 +650,26 @@ export default function App() {
             Crates
           </Button>
 
-          {/* Top Customer Placeholder */}
+          {/* Top Customer */}
           <div className="mt-8 pt-4 border-t border-gray-700 text-center">
             <h4 className="text-xl font-bold text-white mb-4">Top Customer</h4>
-            <div className="flex flex-col items-center">
-              <img
-                src="https://www.minecraftskins.com/uploads/skins/2021/03/04/flamefrags-skin-17290000.png?v4"
-                alt="FlameFrags Skin"
-                className="w-24 h-24 rounded-full object-cover mb-2"
-              />
-              <p className="text-lg font-semibold text-red-400">[Top Customer Name]</p>
-              <p className="text-sm text-gray-400">Total Spent: $[Amount]</p>
-            </div>
+            {topCustomer ? (
+              <div className="flex flex-col items-center">
+                <img
+                  src="/minecraft-skin.png"
+                  alt="Top Customer Skin"
+                  className="w-24 h-24 object-cover object-left-top mb-2"
+                  style={{ clipPath: 'inset(0 50% 0 0)' }} // Crop to show only the front
+                />
+                <p className="text-lg font-semibold text-red-400">{topCustomer.email}</p>
+                <p className="text-sm text-gray-400">Total Spent: ${topCustomer.totalSpent.toFixed(2)}</p>
+              </div>
+            ) : (
+              <p className="text-gray-400">No orders currently.</p>
+            )}
           </div>
 
-          {/* PayPal Logo Placeholder */}
+          {/* PayPal Logo */}
           <div className="mt-8 pt-4 border-t border-gray-700 text-center">
             <h4 className="text-xl font-bold text-white mb-4">Payments Powered By</h4>
             <img
