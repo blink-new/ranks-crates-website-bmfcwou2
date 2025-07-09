@@ -237,41 +237,42 @@ export default function App() {
 
   const sidebarLogin = (
     userEmail ? (
-      <div className="text-center">
-        <p className="text-lg font-semibold text-white">Welcome, {userProfiles.find(u => u.email === userEmail)?.nickname || userEmail}</p>
-        <Button variant="link" onClick={handleLogout} className="text-red-400">
-          Logout
-        </Button>
+      <div className="flex items-center justify-center gap-3 mb-2">
+        <img src="/skin-head.png" alt="User Head" className="w-10 h-10 rounded" style={{objectFit:'cover',objectPosition:'top'}} />
+        <span className="text-lg font-semibold text-white">{userProfiles.find(u => u.email === userEmail)?.nickname || userEmail}</span>
       </div>
     ) : (
-      <div className="space-y-2">
-        <Input
-          type="email"
-          placeholder="Your email for login/register"
-          value={loginEmail}
-          onChange={(e) => setLoginEmail(e.target.value)}
-          className="bg-gray-800 border-gray-600 text-white"
-          onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-        />
-        {showNicknameInput && (
+      <div className="flex items-center gap-3 mb-2">
+        <img src="/skin-head.png" alt="User Head" className="w-10 h-10 rounded" style={{objectFit:'cover',objectPosition:'top'}} />
+        <div className="flex-1 space-y-2">
           <Input
-            type="text"
-            placeholder="Choose a nickname"
-            value={loginNickname}
-            onChange={(e) => setLoginNickname(e.target.value)}
+            type="email"
+            placeholder="Your email for login/register"
+            value={loginEmail}
+            onChange={(e) => setLoginEmail(e.target.value)}
             className="bg-gray-800 border-gray-600 text-white"
-            onKeyDown={(e) => e.key === 'Enter' && handleRegister()}
+            onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
           />
-        )}
-        {!showNicknameInput ? (
-          <Button onClick={handleLogin} className="w-full bg-red-600 hover:bg-red-700">
-            Login / Register
-          </Button>
-        ) : (
-          <Button onClick={handleRegister} className="w-full bg-red-600 hover:bg-red-700">
-            Register
-          </Button>
-        )}
+          {showNicknameInput && (
+            <Input
+              type="text"
+              placeholder="Choose a nickname"
+              value={loginNickname}
+              onChange={(e) => setLoginNickname(e.target.value)}
+              className="bg-gray-800 border-gray-600 text-white"
+              onKeyDown={(e) => e.key === 'Enter' && handleRegister()}
+            />
+          )}
+          {!showNicknameInput ? (
+            <Button onClick={handleLogin} className="w-full bg-red-600 hover:bg-red-700">
+              Login / Register
+            </Button>
+          ) : (
+            <Button onClick={handleRegister} className="w-full bg-red-600 hover:bg-red-700">
+              Register
+            </Button>
+          )}
+        </div>
       </div>
     )
   )
@@ -566,32 +567,74 @@ export default function App() {
           <h1 className="text-2xl font-bold text-white">CrimsonMC</h1>
         </div>
         <div className="flex flex-col space-y-4 flex-grow">
-          {sidebarLogin}
-          <div className="mt-8 pt-4 border-t border-gray-700 text-center">
-            <h4 className="text-xl font-bold text-white mb-4">Top Customer</h4>
-            {topCustomer ? (
-              <div className="flex flex-col items-center">
-                <img
-                  src="/minecraft-skin.png"
-                  alt="Top Customer Skin"
-                  className="w-24 h-24 object-cover object-left-top mb-2"
-                  style={{ clipPath: 'inset(0 50% 0 0)' }}
+          {userEmail ? (
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <img src="/skin-head.png" alt="User Head" className="w-10 h-10 rounded" style={{objectFit:'cover',objectPosition:'top'}} />
+              <span className="text-lg font-semibold text-white">{userProfiles.find(u => u.email === userEmail)?.nickname || userEmail}</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-3 mb-2">
+              <img src="/skin-head.png" alt="User Head" className="w-10 h-10 rounded" style={{objectFit:'cover',objectPosition:'top'}} />
+              <div className="flex-1 space-y-2">
+                <Input
+                  type="email"
+                  placeholder="Your email for login/register"
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                  className="bg-gray-800 border-gray-600 text-white"
+                  onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
                 />
-                <p className="text-lg font-semibold text-red-400">{topCustomer.nickname}</p>
-                <p className="text-sm text-gray-400">Total Spent: ${topCustomer.totalSpent.toFixed(2)}</p>
+                {showNicknameInput && (
+                  <Input
+                    type="text"
+                    placeholder="Choose a nickname"
+                    value={loginNickname}
+                    onChange={(e) => setLoginNickname(e.target.value)}
+                    className="bg-gray-800 border-gray-600 text-white"
+                    onKeyDown={(e) => e.key === 'Enter' && handleRegister()}
+                  />
+                )}
+                {!showNicknameInput ? (
+                  <Button onClick={handleLogin} className="w-full bg-red-600 hover:bg-red-700">
+                    Login / Register
+                  </Button>
+                ) : (
+                  <Button onClick={handleRegister} className="w-full bg-red-600 hover:bg-red-700">
+                    Register
+                  </Button>
+                )}
               </div>
-            ) : (
-              <p className="text-gray-400">No orders currently.</p>
-            )}
-          </div>
-          <div className="mt-8 pt-4 border-t border-gray-700 text-center">
-            <h4 className="text-xl font-bold text-white mb-4">Payments Powered By</h4>
-            <img
-              src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg"
-              alt="PayPal Logo"
-              className="mx-auto w-24"
-            />
-          </div>
+            </div>
+          )}
+          {userEmail && (
+            <Button variant="link" onClick={handleLogout} className="text-red-400 mb-2">
+              Logout
+            </Button>
+          )}
+          <Button
+            variant={activeTab === 'home' ? 'default' : 'ghost'}
+            onClick={() => setActiveTab('home')}
+            className="text-white hover:bg-red-800/20 justify-start"
+          >
+            <Home className="w-4 h-4 mr-2" />
+            Home
+          </Button>
+          <Button
+            variant={activeTab === 'ranks' ? 'default' : 'ghost'}
+            onClick={() => setActiveTab('ranks')}
+            className="text-white hover:bg-red-800/20 justify-start"
+          >
+            <Crown className="w-4 h-4 mr-2" />
+            Ranks
+          </Button>
+          <Button
+            variant={activeTab === 'crates' ? 'default' : 'ghost'}
+            onClick={() => setActiveTab('crates')}
+            className="text-white hover:bg-red-800/20 justify-start"
+          >
+            <Package className="w-4 h-4 mr-2" />
+            Crates
+          </Button>
         </div>
       </aside>
       <div className="flex-1 flex flex-col">
@@ -628,7 +671,7 @@ export default function App() {
               <Button
                 variant={activeTab === 'orders' ? 'default' : 'ghost'}
                 onClick={() => setActiveTab('orders')}
-                className="text-white hover:bg-red-800/20"
+                className="text-white hover:bg-red-800/20 justify-start"
               >
                 <Eye className="w-4 h-4 mr-2" />
                 View Orders ({orders.length})
