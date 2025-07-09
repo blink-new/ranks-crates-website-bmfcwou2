@@ -5,7 +5,7 @@ import { Button } from './components/ui/button'
 import { Input } from './components/ui/input'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './components/ui/dialog'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './components/ui/table'
-import { Crown, Package, Star, User, Mail, MapPin, ShoppingCart, Eye, Search, Filter } from 'lucide-react'
+import { Crown, Package, Star, User, Mail, MapPin, ShoppingCart, Eye, Search, Filter, Sword, Gift, Home, Heart, Globe } from 'lucide-react'
 
 interface Order {
   id: string
@@ -19,7 +19,7 @@ interface Order {
 }
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'ranks' | 'crates' | 'orders'>('ranks')
+  const [activeTab, setActiveTab] = useState<'home' | 'ranks' | 'crates' | 'orders'>('home')
   const [orders, setOrders] = useState<Order[]>([])
   const [isAdmin, setIsAdmin] = useState(false)
   const [customerName, setCustomerName] = useState('')
@@ -58,7 +58,7 @@ function App() {
   const handleAdminLogout = () => {
     setIsAdmin(false)
     localStorage.removeItem('crimsonmc-admin')
-    setActiveTab('ranks')
+    setActiveTab('home')
   }
 
   const handlePurchase = (itemType: string, itemName: string, price: number) => {
@@ -182,10 +182,18 @@ function App() {
                 <Crown className="w-6 h-6 text-white" />
               </div>
               <h1 className="text-2xl font-bold text-white">
-                CrimsonMc <span className="text-red-400">| Store</span>
+                CrimsonMC
               </h1>
             </div>
             <div className="flex items-center space-x-6">
+              <Button 
+                variant={activeTab === 'home' ? 'default' : 'ghost'}
+                onClick={() => setActiveTab('home')}
+                className="text-white hover:bg-red-800/20"
+              >
+                <Home className="w-4 h-4 mr-2" />
+                Home
+              </Button>
               <Button 
                 variant={activeTab === 'ranks' ? 'default' : 'ghost'}
                 onClick={() => setActiveTab('ranks')}
@@ -235,15 +243,177 @@ function App() {
       </nav>
 
       {/* Banner Section */}
-      <img
-        src="https://storage.googleapis.com/blink-451505.firebasestorage.app/screenshots/3000-igps84ylcc0h46n214bwr-78c549ad.preview-blink.com-1752024666767.webp"
-        alt="CrimsonMc Store Banner"
-        className="w-full h-64 object-cover"
-      />
+      <div className="relative">
+        <img
+          src="/crimsonmc-banner.png"
+          alt="CrimsonMC Banner"
+          className="w-full h-96 object-cover"
+        />
+        <div className="absolute inset-0 bg-black/20"></div>
+      </div>
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-12">
-        {activeTab === 'orders' && isAdmin ? (
+        {activeTab === 'home' ? (
+          <div className="space-y-12">
+            {/* Welcome Section */}
+            <div className="text-center space-y-8">
+              <div className="space-y-6">
+                <h2 className="text-4xl font-bold text-white flex items-center justify-center gap-3">
+                  <span className="text-3xl">🔥</span>
+                  About CrimsonMC
+                </h2>
+                <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                  Welcome to CrimsonMC, a next-level Minecraft server built for true warriors. Whether you're here to dominate in intense PvP, rise through the lifesteal ranks, or grind your way to greatness with custom crates and epic events, we've got it all.
+                </p>
+              </div>
+
+              {/* What Makes Us Unique */}
+              <div className="space-y-6">
+                <h3 className="text-3xl font-bold text-white flex items-center justify-center gap-3">
+                  <Globe className="w-8 h-8 text-red-400" />
+                  What Makes Us Unique?
+                </h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                  <Card className="bg-red-900/20 border-red-600/30">
+                    <CardContent className="p-6 text-center">
+                      <div className="flex items-center justify-center mb-4">
+                        <Sword className="w-8 h-8 text-red-400" />
+                      </div>
+                      <h4 className="text-xl font-semibold text-white mb-2">Lifesteal PvP</h4>
+                      <p className="text-gray-300">Defeat players and steal their hearts. Every fight matters.</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-red-900/20 border-red-600/30">
+                    <CardContent className="p-6 text-center">
+                      <div className="flex items-center justify-center mb-4">
+                        <Gift className="w-8 h-8 text-red-400" />
+                      </div>
+                      <h4 className="text-xl font-semibold text-white mb-2">Custom Crates</h4>
+                      <p className="text-gray-300">Win powerful gear, rare loot, and server exclusives.</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-red-900/20 border-red-600/30">
+                    <CardContent className="p-6 text-center">
+                      <div className="flex items-center justify-center mb-4">
+                        <Crown className="w-8 h-8 text-red-400" />
+                      </div>
+                      <h4 className="text-xl font-semibold text-white mb-2">Unique Ranks</h4>
+                      <p className="text-gray-300">Progress through a dynamic rank system with perks and flair.</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-red-900/20 border-red-600/30">
+                    <CardContent className="p-6 text-center">
+                      <div className="flex items-center justify-center mb-4">
+                        <MapPin className="w-8 h-8 text-red-400" />
+                      </div>
+                      <h4 className="text-xl font-semibold text-white mb-2">Custom World & Warps</h4>
+                      <p className="text-gray-300">Explore stunning builds and hidden PvP arenas.</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-red-900/20 border-red-600/30">
+                    <CardContent className="p-6 text-center">
+                      <div className="flex items-center justify-center mb-4">
+                        <User className="w-8 h-8 text-red-400" />
+                      </div>
+                      <h4 className="text-xl font-semibold text-white mb-2">Active Community</h4>
+                      <p className="text-gray-300">Chill, battle, and make allies (or enemies).</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-red-900/20 border-red-600/30">
+                    <CardContent className="p-6 text-center">
+                      <div className="flex items-center justify-center mb-4">
+                        <Heart className="w-8 h-8 text-red-400" />
+                      </div>
+                      <h4 className="text-xl font-semibold text-white mb-2">Join Now</h4>
+                      <p className="text-gray-300">Whether you're here to rule or rebel, CrimsonMC is ready for you. Are you?</p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            </div>
+
+            {/* Crates and Kits Section */}
+            <div className="space-y-8">
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Crates */}
+                <Card className="bg-gradient-to-br from-amber-900/20 to-amber-800/20 border-amber-600/30">
+                  <CardHeader className="text-center">
+                    <div className="flex items-center justify-center mb-4">
+                      <Package className="w-16 h-16 text-amber-400" />
+                    </div>
+                    <CardTitle className="text-2xl text-amber-200">Crates</CardTitle>
+                    <CardDescription className="text-gray-300">
+                      Unlock mystery crates filled with rare items and exclusive rewards
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex items-center text-gray-300">
+                        <Star className="w-4 h-4 mr-2 text-amber-400" />
+                        Legendary weapons and armor
+                      </div>
+                      <div className="flex items-center text-gray-300">
+                        <Star className="w-4 h-4 mr-2 text-amber-400" />
+                        Rare cosmetics and skins
+                      </div>
+                      <div className="flex items-center text-gray-300">
+                        <Star className="w-4 h-4 mr-2 text-amber-400" />
+                        Exclusive server items
+                      </div>
+                    </div>
+                    <Button 
+                      onClick={() => setActiveTab('crates')}
+                      className="w-full bg-amber-600 hover:bg-amber-700"
+                    >
+                      View All Crates
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Kits (Ranks) */}
+                <Card className="bg-gradient-to-br from-red-900/20 to-red-800/20 border-red-600/30">
+                  <CardHeader className="text-center">
+                    <div className="flex items-center justify-center mb-4">
+                      <Crown className="w-16 h-16 text-red-400" />
+                    </div>
+                    <CardTitle className="text-2xl text-red-200">Ranks</CardTitle>
+                    <CardDescription className="text-gray-300">
+                      Upgrade your status with powerful rank kits and exclusive perks
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex items-center text-gray-300">
+                        <Star className="w-4 h-4 mr-2 text-red-400" />
+                        Exclusive commands and permissions
+                      </div>
+                      <div className="flex items-center text-gray-300">
+                        <Star className="w-4 h-4 mr-2 text-red-400" />
+                        Priority server access
+                      </div>
+                      <div className="flex items-center text-gray-300">
+                        <Star className="w-4 h-4 mr-2 text-red-400" />
+                        Custom chat colors and tags
+                      </div>
+                    </div>
+                    <Button 
+                      onClick={() => setActiveTab('ranks')}
+                      className="w-full bg-red-600 hover:bg-red-700"
+                    >
+                      View All Ranks
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        ) : activeTab === 'orders' && isAdmin ? (
           <div className="space-y-8">
             <div className="text-center mb-12">
               <h3 className="text-3xl font-bold text-white mb-4">Order Management</h3>
