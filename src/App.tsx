@@ -240,8 +240,8 @@ function App() {
                       Exclusive commands
                     </div>
                   </div>
-                  <div className="text-2xl font-bold text-yellow-200 mb-4">$5.99</div>
-                  <PurchaseButton itemType="rank" itemName="VIP" price={5.99} />
+                  <div className="text-2xl font-bold text-yellow-200 mb-4">$3.00</div>
+                  <PurchaseButton itemType="rank" itemName="VIP" price={3.00} />
                 </CardContent>
               </Card>
               {/* Knight Rank */}
@@ -267,8 +267,8 @@ function App() {
                       Custom nicknames
                     </div>
                   </div>
-                  <div className="text-2xl font-bold text-blue-200 mb-4">$12.99</div>
-                  <PurchaseButton itemType="rank" itemName="Knight" price={12.99} />
+                  <div className="text-2xl font-bold text-blue-200 mb-4">$5.00</div>
+                  <PurchaseButton itemType="rank" itemName="Knight" price={5.00} />
                 </CardContent>
               </Card>
               {/* Titan Rank */}
@@ -294,8 +294,8 @@ function App() {
                       Access to Titan-only areas
                     </div>
                   </div>
-                  <div className="text-2xl font-bold text-purple-200 mb-4">$19.99</div>
-                  <PurchaseButton itemType="rank" itemName="Titan" price={19.99} />
+                  <div className="text-2xl font-bold text-purple-200 mb-4">$7.00</div>
+                  <PurchaseButton itemType="rank" itemName="Titan" price={7.00} />
                 </CardContent>
               </Card>
               {/* Zeus Rank */}
@@ -321,8 +321,8 @@ function App() {
                       Zeus-only kits
                     </div>
                   </div>
-                  <div className="text-2xl font-bold text-sky-200 mb-4">$29.99</div>
-                  <PurchaseButton itemType="rank" itemName="Zeus" price={29.99} />
+                  <div className="text-2xl font-bold text-sky-200 mb-4">$9.00</div>
+                  <PurchaseButton itemType="rank" itemName="Zeus" price={9.00} />
                 </CardContent>
               </Card>
               {/* Devil Rank */}
@@ -348,8 +348,8 @@ function App() {
                       Devil-exclusive commands
                     </div>
                   </div>
-                  <div className="text-2xl font-bold text-red-300 mb-4">$49.99</div>
-                  <PurchaseButton itemType="rank" itemName="Devil" price={49.99} />
+                  <div className="text-2xl font-bold text-red-300 mb-4">$11.00</div>
+                  <PurchaseButton itemType="rank" itemName="Devil" price={11.00} />
                 </CardContent>
               </Card>
             </div>
