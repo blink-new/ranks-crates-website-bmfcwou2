@@ -573,7 +573,7 @@ export default function App() {
   // JSX return
   // ---------------------------------------------------------------------------
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-950 via-gray-900 to-black">
+    <div className="flex min-h-screen bg-gradient-to-br from-red-950 via-gray-900 to-black">
       {/* Dialogs */}
       <AdminLoginDialog />
       <PurchaseModal
@@ -586,189 +586,152 @@ export default function App() {
         itemName={purchaseItem?.itemName || ''}
       />
 
-      {/* Navigation */}
-      <nav className="bg-black/20 backdrop-blur-sm border-b border-red-800/30">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-red-800 rounded-lg flex items-center justify-center">
-                <Crown className="w-6 h-6 text-white" />
-              </div>
-              <h1 className="text-2xl font-bold text-white">CrimsonMC</h1>
+      {/* Permanent Sidebar */}
+      <aside className="w-64 bg-black/20 backdrop-blur-sm border-r border-red-800/30 p-4 flex flex-col">
+        <div className="flex items-center space-x-3 mb-8">
+          <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-red-800 rounded-lg flex items-center justify-center">
+            <Crown className="w-6 h-6 text-white" />
+          </div>
+          <h1 className="text-2xl font-bold text-white">CrimsonMC</h1>
+        </div>
+
+        <div className="flex flex-col space-y-4 flex-grow">
+          {userEmail ? (
+            <div className="text-center">
+              <p className="text-lg font-semibold text-white">Welcome, {userEmail}</p>
+              <Button variant="link" onClick={handleLogout} className="text-red-400">
+                Logout
+              </Button>
             </div>
-            <div className="flex items-center space-x-6">
-              <Button
-                variant={activeTab === 'home' ? 'default' : 'ghost'}
-                onClick={() => setActiveTab('home')}
-                className="text-white hover:bg-red-800/20"
-              >
-                <Home className="w-4 h-4 mr-2" />
-                Home
+          ) : (
+            <div className="space-y-2">
+              <Input
+                type="email"
+                placeholder="Your email for login/register"
+                value={loginEmail}
+                onChange={(e) => setLoginEmail(e.target.value)}
+                className="bg-gray-800 border-gray-600 text-white"
+                onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
+              />
+              <Button onClick={handleLogin} className="w-full bg-red-600 hover:bg-red-700">
+                Login / Register
               </Button>
-              <Button
-                variant={activeTab === 'ranks' ? 'default' : 'ghost'}
-                onClick={() => setActiveTab('ranks')}
-                className="text-white hover:bg-red-800/20"
-              >
-                <Crown className="w-4 h-4 mr-2" />
-                Ranks
-              </Button>
-              <Button
-                variant={activeTab === 'crates' ? 'default' : 'ghost'}
-                onClick={() => setActiveTab('crates')}
-                className="text-white hover:bg-red-800/20"
-              >
-                <Package className="w-4 h-4 mr-2" />
-                Crates
-              </Button>
-
-              {isAdmin ? (
-                <>
-                  <Button
-                    variant={activeTab === 'orders' ? 'default' : 'ghost'}
-                    onClick={() => setActiveTab('orders')}
-                    className="text-white hover:bg-red-800/20"
-                  >
-                    <Eye className="w-4 h-4 mr-2" />
-                    View Orders ({orders.length})
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    onClick={handleAdminLogout}
-                    className="text-red-400 hover:bg-red-800/20"
-                  >
-                    Logout
-                  </Button>
-                </>
-              ) : (
-                <Button
-                  variant="ghost"
-                  onClick={() => setShowAdminLogin(true)}
-                  className="text-white hover:bg-red-800/20"
-                >
-                  Admin
-                </Button>
-              )}
             </div>
+          )}
 
-            {/* Hamburger menu for sidebar */}
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" className="text-white">
-                  <Menu className="w-6 h-6" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="bg-gray-900 text-white border-gray-700">
-                <SheetHeader>
-                  <SheetTitle className="text-white">CrimsonMC Menu</SheetTitle>
-                </SheetHeader>
-                <div className="flex flex-col space-y-4 mt-8">
-                  {userEmail ? (
-                    <div className="text-center">
-                      <p className="text-lg font-semibold">Welcome, {userEmail}</p>
-                      <Button variant="link" onClick={handleLogout} className="text-red-400">
-                        Logout
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="space-y-2">
-                      <Input
-                        type="email"
-                        placeholder="Your email for login/register"
-                        value={loginEmail}
-                        onChange={(e) => setLoginEmail(e.target.value)}
-                        className="bg-gray-800 border-gray-600 text-white"
-                        onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-                      />
-                      <Button onClick={handleLogin} className="w-full bg-red-600 hover:bg-red-700">
-                        Login / Register
-                      </Button>
-                    </div>
-                  )}
+          <Button
+            variant="ghost"
+            onClick={() => setActiveTab('home')}
+            className="text-white hover:bg-red-800/20 justify-start"
+          >
+            <Home className="w-4 h-4 mr-2" />
+            Home
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => setActiveTab('ranks')}
+            className="text-white hover:bg-red-800/20 justify-start"
+          >
+            <Crown className="w-4 h-4 mr-2" />
+            Ranks
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => setActiveTab('crates')}
+            className="text-white hover:bg-red-800/20 justify-start"
+          >
+            <Package className="w-4 h-4 mr-2" />
+            Crates
+          </Button>
 
-                  <Button
-                    variant="ghost"
-                    onClick={() => setActiveTab('home')}
-                    className="text-white hover:bg-red-800/20 justify-start"
-                  >
-                    <Home className="w-4 h-4 mr-2" />
-                    Home
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    onClick={() => setActiveTab('ranks')}
-                    className="text-white hover:bg-red-800/20 justify-start"
-                  >
-                    <Crown className="w-4 h-4 mr-2" />
-                    Ranks
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    onClick={() => setActiveTab('crates')}
-                    className="text-white hover:bg-red-800/20 justify-start"
-                  >
-                    <Package className="w-4 h-4 mr-2" />
-                    Crates
-                  </Button>
+          {/* Top Customer Placeholder */}
+          <div className="mt-8 pt-4 border-t border-gray-700 text-center">
+            <h4 className="text-xl font-bold text-white mb-4">Top Customer</h4>
+            <div className="flex flex-col items-center">
+              <img
+                src="https://www.minecraftskins.com/uploads/skins/2021/03/04/flamefrags-skin-17290000.png?v4"
+                alt="FlameFrags Skin"
+                className="w-24 h-24 rounded-full object-cover mb-2"
+              />
+              <p className="text-lg font-semibold text-red-400">[Top Customer Name]</p>
+              <p className="text-sm text-gray-400">Total Spent: $[Amount]</p>
+            </div>
+          </div>
 
-                  {/* Top Customer Placeholder */}
-                  <div className="mt-8 pt-4 border-t border-gray-700 text-center">
-                    <h4 className="text-xl font-bold text-white mb-4">Top Customer</h4>
-                    <div className="flex flex-col items-center">
-                      <img
-                        src="https://www.minecraftskins.com/uploads/skins/2021/03/04/flamefrags-skin-17290000.png?v4"
-                        alt="FlameFrags Skin"
-                        className="w-24 h-24 rounded-full object-cover mb-2"
-                      />
-                      <p className="text-lg font-semibold text-red-400">[Top Customer Name]</p>
-                      <p className="text-sm text-gray-400">Total Spent: $[Amount]</p>
-                    </div>
-                  </div>
-
-                  {/* PayPal Logo Placeholder */}
-                  <div className="mt-8 pt-4 border-t border-gray-700 text-center">
-                    <h4 className="text-xl font-bold text-white mb-4">Payments Powered By</h4>
-                    <img
-                      src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg"
-                      alt="PayPal Logo"
-                      className="mx-auto w-24"
-                    />
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
+          {/* PayPal Logo Placeholder */}
+          <div className="mt-8 pt-4 border-t border-gray-700 text-center">
+            <h4 className="text-xl font-bold text-white mb-4">Payments Powered By</h4>
+            <img
+              src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg"
+              alt="PayPal Logo"
+              className="mx-auto w-24"
+            />
           </div>
         </div>
-      </nav>
+      </aside>
 
-      {/* Banner */}
-      <div className="relative">
-        <img
-          src="/crimsonmc-banner.png"
-          alt="CrimsonMC Banner"
-          className="w-full h-96 object-cover"
-        />
-        <div className="absolute inset-0 bg-black/20" />
-        <button
-          onClick={() => {
-            navigator.clipboard.writeText('https://discord.gg/W92rssnj')
-            alert('Discord invite link copied to clipboard!')
-          }}
-          className="absolute top-4 right-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg cursor-pointer select-none"
-          title="Copy Discord Invite Link"
-        >
-          Discord
-        </button>
-      </div>
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col">
+        {/* Top Navigation (for Admin) */}
+        <nav className="bg-black/20 backdrop-blur-sm border-b border-red-800/30 py-4 px-4 flex justify-end">
+          {isAdmin ? (
+            <>
+              <Button
+                variant={activeTab === 'orders' ? 'default' : 'ghost'}
+                onClick={() => setActiveTab('orders')}
+                className="text-white hover:bg-red-800/20"
+              >
+                <Eye className="w-4 h-4 mr-2" />
+                View Orders ({orders.length})
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={handleAdminLogout}
+                className="text-red-400 hover:bg-red-800/20 ml-4"
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="ghost"
+              onClick={() => setShowAdminLogin(true)}
+              className="text-white hover:bg-red-800/20"
+            >
+              Admin
+            </Button>
+          )}
+        </nav>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-12 space-y-12">
-        {activeTab === 'home' && renderHome()}
-        {activeTab === 'ranks' && renderRanks()}
-        {activeTab === 'orders' && isAdmin && renderOrders()}
-        {activeTab === 'crates' && (
-          <p className="text-white text-center">Crates section coming soon!</p>
-        )}
+        {/* Banner */}
+        <div className="relative">
+          <img
+            src="/crimsonmc-banner.png"
+            alt="CrimsonMC Banner"
+            className="w-full h-96 object-cover"
+          />
+          <div className="absolute inset-0 bg-black/20" />
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText('https://discord.gg/W92rssnj')
+              alert('Discord invite link copied to clipboard!')
+            }}
+            className="absolute top-4 right-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg cursor-pointer select-none"
+            title="Copy Discord Invite Link"
+          >
+            Discord
+          </button>
+        </div>
+
+        {/* Main Content */}
+        <div className="container mx-auto px-4 py-12 space-y-12">
+          {activeTab === 'home' && renderHome()}
+          {activeTab === 'ranks' && renderRanks()}
+          {activeTab === 'orders' && isAdmin && renderOrders()}
+          {activeTab === 'crates' && (
+            <p className="text-white text-center">Crates section coming soon!</p>
+          )}
+        </div>
       </div>
     </div>
   )
