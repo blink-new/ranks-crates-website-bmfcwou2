@@ -654,7 +654,7 @@ export default function App() {
             {/* Hamburger menu for sidebar */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" className="text-white md:hidden">
+                <Button variant="ghost" className="text-white">
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
@@ -754,7 +754,7 @@ export default function App() {
             navigator.clipboard.writeText('https://discord.gg/W92rssnj')
             alert('Discord invite link copied to clipboard!')
           }}
-          className="absolute top-20 left-20 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg cursor-pointer select-none"
+          className="absolute top-4 right-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg cursor-pointer select-none"
           title="Copy Discord Invite Link"
         >
           Discord
