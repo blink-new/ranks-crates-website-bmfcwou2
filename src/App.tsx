@@ -27,14 +27,11 @@ import {
   Crown,
   Package,
   Star,
-  User,
-  MapPin,
   ShoppingCart,
   Eye,
   Sword,
   Gift,
   Home,
-  Heart,
   Globe,
   Shield,
   Zap,
@@ -99,7 +96,6 @@ export default function App() {
     localStorage.setItem('crimsonmc-user-profiles', JSON.stringify(userProfiles))
   }, [userProfiles])
 
-  // Admin helpers
   const handleAdminLogin = () => {
     if (adminPassword === 'admin123') {
       setIsAdmin(true)
@@ -116,7 +112,6 @@ export default function App() {
     setActiveTab('home')
   }
 
-  // User authentication
   const handleLogin = () => {
     if (!loginEmail || !loginEmail.includes('@')) {
       alert('Please enter a valid email address.')
@@ -155,7 +150,6 @@ export default function App() {
     alert('You have been logged out.')
   }
 
-  // Purchase helpers
   const openPurchaseModal = (itemType: string, itemName: string, price: number) => {
     setPurchaseItem({ itemType, itemName, price })
     setPurchaseModalOpen(true)
@@ -191,7 +185,6 @@ export default function App() {
     alert(`Order placed successfully! Order ID: ${newOrder.id}`)
   }
 
-  // Filters
   const filteredOrders = orders.filter((order) => {
     const matchesSearch =
       order.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -201,7 +194,6 @@ export default function App() {
     return matchesSearch && matchesFilter
   })
 
-  // Small components
   const AdminLoginDialog = () => (
     <Dialog open={showAdminLogin} onOpenChange={setShowAdminLogin}>
       <DialogContent className="bg-gray-900 text-white border-gray-700">
@@ -237,16 +229,14 @@ export default function App() {
     </Button>
   )
 
-  // Top customer logic: only users with totalSpent > 0
   const topCustomer = userProfiles.filter(u => u.totalSpent > 0).length > 0
     ? userProfiles.filter(u => u.totalSpent > 0).reduce((max, current) =>
         max.totalSpent > current.totalSpent ? max : current,
       )
     : null
 
-  // Sidebar login/register UI
-  const sidebarLogin = userEmail
-    ? (
+  const sidebarLogin = (
+    userEmail ? (
       <div className="text-center">
         <p className="text-lg font-semibold text-white">Welcome, {userProfiles.find(u => u.email === userEmail)?.nickname || userEmail}</p>
         <Button variant="link" onClick={handleLogout} className="text-red-400">
@@ -284,12 +274,280 @@ export default function App() {
         )}
       </div>
     )
+  )
 
-  // ...rest of the code remains unchanged, just replace the sidebarLogin and topCustomer logic in the sidebar...
+  const renderHome = () => (
+    <div className="space-y-12">
+      <section className="text-center space-y-8">
+        <div className="space-y-6">
+          <h2 className="text-4xl font-bold text-white flex items-center justify-center gap-3">
+            <span className="text-3xl">🔥</span>
+            About CrimsonMC
+          </h2>
+          <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            Welcome to CrimsonMC, a next-level Minecraft server built for true
+            warriors. Whether you're here to dominate in intense PvP, rise
+            through the lifesteal ranks, or grind your way to greatness with
+            custom crates and epic events, we've got it all.
+          </p>
+        </div>
+        <div className="space-y-6">
+          <h3 className="text-3xl font-bold text-white flex items-center justify-center gap-3">
+            <Globe className="w-8 h-8 text-red-400" />
+            What Makes Us Unique?
+          </h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <Card className="bg-red-900/20 border-red-600/30">
+              <CardContent className="p-6 text-center">
+                <div className="flex items-center justify-center mb-4">
+                  <Sword className="w-8 h-8 text-red-400" />
+                </div>
+                <h4 className="text-xl font-semibold text-white mb-2">Lifesteal PvP</h4>
+                <p className="text-gray-300">Defeat players and steal their hearts. Every fight matters.</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-red-900/20 border-red-600/30">
+              <CardContent className="p-6 text-center">
+                <div className="flex items-center justify-center mb-4">
+                  <Gift className="w-8 h-8 text-red-400" />
+                </div>
+                <h4 className="text-xl font-semibold text-white mb-2">Custom Crates</h4>
+                <p className="text-gray-300">Win powerful gear, rare loot, and server exclusives.</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-red-900/20 border-red-600/30">
+              <CardContent className="p-6 text-center">
+                <div className="flex items-center justify-center mb-4">
+                  <Crown className="w-8 h-8 text-red-400" />
+                </div>
+                <h4 className="text-xl font-semibold text-white mb-2">Unique Ranks</h4>
+                <p className="text-gray-300">Progress through a dynamic rank system with perks and flair.</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+
+  const renderRanks = () => (
+    <section className="space-y-8">
+      <header className="text-center mb-12">
+        <h3 className="text-3xl font-bold text-white mb-4">Server Ranks</h3>
+        <p className="text-gray-300 max-w-2xl mx-auto">
+          Unlock exclusive perks, commands, and privileges with our premium rank
+          system.
+        </p>
+      </header>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <Card className="bg-gradient-to-br from-yellow-900/20 to-yellow-800/20 border-yellow-600/30">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <Crown className="w-8 h-8 text-yellow-400" />
+              <Badge className="bg-yellow-600/20 text-yellow-200">VIP</Badge>
+            </div>
+            <CardTitle className="text-yellow-200">VIP</CardTitle>
+            <CardDescription className="text-gray-300">
+              Entry-level perks for new warriors.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-gray-300">
+            <ul className="space-y-2 mb-4 text-sm">
+              <li className="flex items-center">
+                <Star className="w-4 h-4 mr-2 text-yellow-400" /> Priority join
+                access
+              </li>
+              <li className="flex items-center">
+                <Star className="w-4 h-4 mr-2 text-yellow-400" /> Exclusive
+                commands
+              </li>
+            </ul>
+            <div className="text-2xl font-bold text-yellow-200 mb-4">$3.00</div>
+            <PurchaseButton itemType="rank" itemName="VIP" price={3} />
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-br from-blue-900/20 to-blue-800/20 border-blue-600/30">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <Shield className="w-8 h-8 text-blue-400" />
+              <Badge className="bg-blue-600/20 text-blue-200">KNIGHT</Badge>
+            </div>
+            <CardTitle className="text-blue-200">Knight</CardTitle>
+            <CardDescription className="text-gray-300">
+              Brave defenders with extra perks.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-gray-300">
+            <ul className="space-y-2 mb-4 text-sm">
+              <li className="flex items-center">
+                <Star className="w-4 h-4 mr-2 text-blue-400" /> All VIP perks
+                included
+              </li>
+              <li className="flex items-center">
+                <Star className="w-4 h-4 mr-2 text-blue-400" /> Custom
+                nicknames
+              </li>
+            </ul>
+            <div className="text-2xl font-bold text-blue-200 mb-4">$5.00</div>
+            <PurchaseButton itemType="rank" itemName="Knight" price={5} />
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-br from-purple-900/20 to-purple-800/20 border-purple-600/30">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <Zap className="w-8 h-8 text-purple-400" />
+              <Badge className="bg-purple-600/20 text-purple-200">TITAN</Badge>
+            </div>
+            <CardTitle className="text-purple-200">Titan</CardTitle>
+            <CardDescription className="text-gray-300">
+              Mighty warriors with advanced features.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-gray-300">
+            <ul className="space-y-2 mb-4 text-sm">
+              <li className="flex items-center">
+                <Star className="w-4 h-4 mr-2 text-purple-400" /> All Knight
+                perks included
+              </li>
+              <li className="flex items-center">
+                <Star className="w-4 h-4 mr-2 text-purple-400" /> Access to
+                Titan-only areas
+              </li>
+            </ul>
+            <div className="text-2xl font-bold text-purple-200 mb-4">$7.00</div>
+            <PurchaseButton itemType="rank" itemName="Titan" price={7} />
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-br from-sky-900/20 to-sky-800/20 border-sky-600/30">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <Flame className="w-8 h-8 text-sky-400" />
+              <Badge className="bg-sky-600/20 text-sky-200">ZEUS</Badge>
+            </div>
+            <CardTitle className="text-sky-200">Zeus</CardTitle>
+            <CardDescription className="text-gray-300">
+              Godlike powers and exclusive commands.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-gray-300">
+            <ul className="space-y-2 mb-4 text-sm">
+              <li className="flex items-center">
+                <Star className="w-4 h-4 mr-2 text-sky-400" /> All Titan perks
+                included
+              </li>
+              <li className="flex items-center">
+                <Star className="w-4 h-4 mr-2 text-sky-400" /> Zeus-only kits
+              </li>
+            </ul>
+            <div className="text-2xl font-bold text-sky-200 mb-4">$9.00</div>
+            <PurchaseButton itemType="rank" itemName="Zeus" price={9} />
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-br from-red-900/20 to-black border-red-700/30">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <Flame className="w-8 h-8 text-red-500" />
+              <Badge className="bg-red-700/20 text-red-300">DEVIL</Badge>
+            </div>
+            <CardTitle className="text-red-300">Devil</CardTitle>
+            <CardDescription className="text-gray-300">
+              The ultimate rank for the most feared.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-gray-300">
+            <ul className="space-y-2 mb-4 text-sm">
+              <li className="flex items-center">
+                <Star className="w-4 h-4 mr-2 text-red-500" /> All Zeus perks
+                included
+              </li>
+              <li className="flex items-center">
+                <Star className="w-4 h-4 mr-2 text-red-500" /> Devil-exclusive
+                commands
+              </li>
+            </ul>
+            <div className="text-2xl font-bold text-red-300 mb-4">$11.00</div>
+            <PurchaseButton itemType="rank" itemName="Devil" price={11} />
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  )
+
+  const renderOrders = () => (
+    <section>
+      <header className="mb-6 flex items-center gap-4">
+        <Input
+          placeholder="Search orders..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="max-w-xs"
+        />
+        <select
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+          className="bg-gray-800 border-gray-700 text-white rounded-md px-3 py-2"
+        >
+          <option value="all">All statuses</option>
+          <option value="completed">Completed</option>
+        </select>
+      </header>
+      {filteredOrders.length === 0 ? (
+        <p className="text-gray-400">No orders found.</p>
+      ) : (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>ID</TableHead>
+              <TableHead>IGN</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Item</TableHead>
+              <TableHead>Price</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredOrders.map((o) => (
+              <TableRow key={o.id}>
+                <TableCell className="font-mono text-xs text-gray-300">
+                  {o.id.slice(0, 8)}...
+                </TableCell>
+                <TableCell>{o.customerName}</TableCell>
+                <TableCell>{o.customerEmail}</TableCell>
+                <TableCell>{o.itemName}</TableCell>
+                <TableCell>${o.price.toFixed(2)}</TableCell>
+                <TableCell>{o.status}</TableCell>
+                <TableCell>
+                  {new Date(o.createdAt).toLocaleDateString()}{' '}
+                  {new Date(o.createdAt).toLocaleTimeString()}
+                </TableCell>
+                <TableCell>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => handleDeleteOrder(o.id)}
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
+    </section>
+  )
+
+  const handleDeleteOrder = (orderId: string) => {
+    const updatedOrders = orders.filter((order) => order.id !== orderId)
+    setOrders(updatedOrders)
+    localStorage.setItem('crimsonmc-orders', JSON.stringify(updatedOrders))
+    alert('Order deleted successfully!')
+  }
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-red-950 via-gray-900 to-black">
-      {/* Dialogs */}
       <AdminLoginDialog />
       <PurchaseModal
         isOpen={purchaseModalOpen}
@@ -300,8 +558,6 @@ export default function App() {
         onSubmit={handlePurchaseSubmit}
         itemName={purchaseItem?.itemName || ''}
       />
-
-      {/* Permanent Sidebar */}
       <aside className="w-64 bg-black/20 backdrop-blur-sm border-r border-red-800/30 p-4 flex flex-col">
         <div className="flex items-center space-x-3 mb-8">
           <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-red-800 rounded-lg flex items-center justify-center">
@@ -311,39 +567,6 @@ export default function App() {
         </div>
         <div className="flex flex-col space-y-4 flex-grow">
           {sidebarLogin}
-          <Button
-            variant="ghost"
-            onClick={() => setActiveTab('home')}
-            className="text-white hover:bg-red-800/20 justify-start"
-          >
-            <Home className="w-4 h-4 mr-2" />
-            Home
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={() => setActiveTab('ranks')}
-            className="text-white hover:bg-red-800/20 justify-start"
-          >
-            <Crown className="w-4 h-4 mr-2" />
-            Ranks
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={() => setActiveTab('crates')}
-            className="text-white hover:bg-red-800/20 justify-start"
-          >
-            <Package className="w-4 h-4 mr-2" />
-            Crates
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={() => setActiveTab('orders')}
-            className="text-white hover:bg-red-800/20 justify-start"
-          >
-            <Eye className="w-4 h-4 mr-2" />
-            Orders
-          </Button>
-          {/* Top Customer */}
           <div className="mt-8 pt-4 border-t border-gray-700 text-center">
             <h4 className="text-xl font-bold text-white mb-4">Top Customer</h4>
             {topCustomer ? (
@@ -361,7 +584,6 @@ export default function App() {
               <p className="text-gray-400">No orders currently.</p>
             )}
           </div>
-          {/* PayPal Logo */}
           <div className="mt-8 pt-4 border-t border-gray-700 text-center">
             <h4 className="text-xl font-bold text-white mb-4">Payments Powered By</h4>
             <img
@@ -372,10 +594,35 @@ export default function App() {
           </div>
         </div>
       </aside>
-      {/* Main Content Area */}
       <div className="flex-1 flex flex-col">
-        {/* Top Navigation (for Admin) */}
-        <nav className="bg-black/20 backdrop-blur-sm border-b border-red-800/30 py-4 px-4 flex justify-end">
+        <nav className="bg-black/20 backdrop-blur-sm border-b border-red-800/30 py-4 px-4 flex justify-between items-center">
+            <div className="flex items-center space-x-6">
+                <Button
+                    variant={activeTab === 'home' ? 'default' : 'ghost'}
+                    onClick={() => setActiveTab('home')}
+                    className="text-white hover:bg-red-800/20"
+                >
+                    <Home className="w-4 h-4 mr-2" />
+                    Home
+                </Button>
+                <Button
+                    variant={activeTab === 'ranks' ? 'default' : 'ghost'}
+                    onClick={() => setActiveTab('ranks')}
+                    className="text-white hover:bg-red-800/20"
+                >
+                    <Crown className="w-4 h-4 mr-2" />
+                    Ranks
+                </Button>
+                <Button
+                    variant={activeTab === 'crates' ? 'default' : 'ghost'}
+                    onClick={() => setActiveTab('crates')}
+                    className="text-white hover:bg-red-800/20"
+                >
+                    <Package className="w-4 h-4 mr-2" />
+                    Crates
+                </Button>
+            </div>
+            <div>
           {isAdmin ? (
             <>
               <Button
@@ -395,43 +642,16 @@ export default function App() {
               </Button>
             </>
           ) : (
-            <>
-              <Button
-                variant="ghost"
-                onClick={() => setActiveTab('ranks')}
-                className="text-white hover:bg-red-800/20 justify-start"
-              >
-                <Crown className="w-4 h-4 mr-2" />
-                Ranks
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => setActiveTab('crates')}
-                className="text-white hover:bg-red-800/20 justify-start"
-              >
-                <Package className="w-4 h-4 mr-2" />
-                Crates
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => setActiveTab('orders')}
-                className="text-white hover:bg-red-800/20 justify-start"
-              >
-                <Eye className="w-4 h-4 mr-2" />
-                Orders
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={() => setShowAdminLogin(true)}
-                className="text-white hover:bg-red-800/20"
-              >
-                Admin
-              </Button>
-            </>
+            <Button
+              variant="ghost"
+              onClick={() => setShowAdminLogin(true)}
+              className="text-white hover:bg-red-800/20"
+            >
+              Admin
+            </Button>
           )}
+          </div>
         </nav>
-
-        {/* Banner */}
         <div className="relative">
           <img
             src="/crimsonmc-banner.png"
@@ -450,9 +670,16 @@ export default function App() {
             Discord
           </button>
         </div>
-        {/* Main Content */}
         <div className="container mx-auto px-4 py-12 space-y-12">
-          {/* ...rest of your main content rendering... */}
+          {activeTab === 'home' && renderHome()}
+          {activeTab === 'ranks' && renderRanks()}
+          {activeTab === 'orders' && isAdmin && renderOrders()}
+          {activeTab === 'crates' && (
+            <div className="text-center">
+                <h3 className="text-3xl font-bold text-white mb-4">No crates yet.</h3>
+                <p className="text-gray-400">Check back soon for exciting new crates!</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
