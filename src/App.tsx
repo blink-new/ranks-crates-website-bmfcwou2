@@ -335,6 +335,14 @@ export default function App() {
             <Package className="w-4 h-4 mr-2" />
             Crates
           </Button>
+          <Button
+            variant="ghost"
+            onClick={() => setActiveTab('orders')}
+            className="text-white hover:bg-red-800/20 justify-start"
+          >
+            <Eye className="w-4 h-4 mr-2" />
+            Orders
+          </Button>
           {/* Top Customer */}
           <div className="mt-8 pt-4 border-t border-gray-700 text-center">
             <h4 className="text-xl font-bold text-white mb-4">Top Customer</h4>
@@ -387,15 +395,42 @@ export default function App() {
               </Button>
             </>
           ) : (
-            <Button
-              variant="ghost"
-              onClick={() => setShowAdminLogin(true)}
-              className="text-white hover:bg-red-800/20"
-            >
-              Admin
-            </Button>
+            <>
+              <Button
+                variant="ghost"
+                onClick={() => setActiveTab('ranks')}
+                className="text-white hover:bg-red-800/20 justify-start"
+              >
+                <Crown className="w-4 h-4 mr-2" />
+                Ranks
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => setActiveTab('crates')}
+                className="text-white hover:bg-red-800/20 justify-start"
+              >
+                <Package className="w-4 h-4 mr-2" />
+                Crates
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => setActiveTab('orders')}
+                className="text-white hover:bg-red-800/20 justify-start"
+              >
+                <Eye className="w-4 h-4 mr-2" />
+                Orders
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => setShowAdminLogin(true)}
+                className="text-white hover:bg-red-800/20"
+              >
+                Admin
+              </Button>
+            </>
           )}
         </nav>
+
         {/* Banner */}
         <div className="relative">
           <img
