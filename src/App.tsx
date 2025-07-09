@@ -728,11 +728,10 @@ export default function App() {
           <div className="absolute inset-0 bg-black/20" />
           <button
             onClick={() => {
-              navigator.clipboard.writeText('https://discord.gg/W92rssnj')
-              alert('Discord invite link copied to clipboard!')
+              window.open('https://discord.gg/A4mZvAWE', '_blank')
             }}
             className="absolute top-4 right-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg cursor-pointer select-none"
-            title="Copy Discord Invite Link"
+            title="Join Discord Server"
           >
             Discord
           </button>
