@@ -547,6 +547,30 @@ export default function App() {
     alert('Order deleted successfully!')
   }
 
+  const handleLeaderboard = () => (
+    <div className="mt-8 pt-4 border-t border-gray-700 text-center">
+      <h4 className="text-xl font-bold text-white mb-4">Leaderboard</h4>
+      {userProfiles.filter(u => u.totalSpent > 0).length === 0 ? (
+        <p className="text-gray-400">No leaderboard yet.</p>
+      ) : (
+        <ul className="space-y-3">
+          {userProfiles
+            .filter(u => u.totalSpent > 0)
+            .sort((a, b) => b.totalSpent - a.totalSpent)
+            .slice(0, 5)
+            .map((u, i) => (
+              <li key={u.email} className="flex items-center gap-3 justify-center">
+                <span className={`text-lg font-bold ${i === 0 ? 'text-amber-400' : 'text-white'}`}>{i + 1}.</span>
+                <img src="/skin-head.png" alt="User Head" className="w-8 h-8 rounded" style={{objectFit:'cover',objectPosition:'top'}} />
+                <span className="font-semibold text-white">{u.nickname}</span>
+                <span className="ml-2 text-sm text-gray-400">${u.totalSpent.toFixed(2)}</span>
+              </li>
+            ))}
+        </ul>
+      )}
+    </div>
+  )
+
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-red-950 via-gray-900 to-black">
       <AdminLoginDialog />
@@ -723,6 +747,26 @@ export default function App() {
                 <p className="text-gray-400">Check back soon for exciting new crates!</p>
             </div>
           )}
+          {activeTab === 'home' && (
+            <div className="mt-8 pt-4 border-t border-gray-700 text-center">
+              <h4 className="text-xl font-bold text-white mb-4">Top Customer</h4>
+              {topCustomer ? (
+                <div className="flex flex-col items-center">
+                  <img
+                    src="/minecraft-skin.png"
+                    alt="Top Customer Skin"
+                    className="w-24 h-24 object-cover object-left-top mb-2"
+                    style={{ clipPath: 'inset(0 50% 0 0)' }}
+                  />
+                  <p className="text-lg font-semibold text-red-400">{topCustomer.nickname}</p>
+                  <p className="text-sm text-gray-400">Total Spent: ${topCustomer.totalSpent.toFixed(2)}</p>
+                </div>
+              ) : (
+                <p className="text-gray-400">No orders currently.</p>
+              )}
+            </div>
+          )}
+          {activeTab === 'home' && handleLeaderboard()}
         </div>
       </div>
     </div>
